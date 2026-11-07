@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منطقة محظورة وعيد ميلاد عبثي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: #0b0b0f;
+            color: #00ffcc;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            text-align: center;
+            padding: 30px;
+            max-width: 650px;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .card {
+            background: rgba(20, 20, 30, 0.9);
+            border: 3px dashed #ff007f;
+            border-radius: 25px;
+            padding: 40px 25px;
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.4);
+            transform: rotate(-1deg);
+        }
+
+        /* شاشة الباسورد */
+        #lockScreen {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        #mainContent {
+            display: none;
+            animation: shake 3s infinite alternate;
+        }
+
+        @keyframes shake {
+            0% { transform: rotate(-1deg) translateY(0); }
+            100% { transform: rotate(1deg) translateY(-8px); }
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            color: #ff007f;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px #00ffcc;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        input[type="text"] {
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            border: 2px solid #00ffcc;
+            background: #121218;
+            color: #fff;
+            text-align: center;
+            outline: none;
+            width: 80%;
+            max-width: 300px;
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            background: #ff007f;
+            color: #ffffff;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            border-radius: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #99004c;
+            transition: all 0.1s ease;
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #99004c;
+        }
+
+        .error-msg {
+            color: #ff3333;
+            font-size: 1rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .hidden-message {
+            margin-top: 25px;
+            font-size: 1.2rem;
+            color: #ffeb3b;
+            display: none;
+            border-top: 2px solid #ff007f;
+            padding-top: 20px;
+            font-weight: bold;
+        }
+
+        /* قلوب وبالونات طايرة من تحت */
+        .floating-item {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            animation: floatUp linear infinite;
+            z-index: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(0.6) rotate(0deg);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.9;
+            }
+            100% {
+                transform: translateY(-110vh) scale(1.3) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- شاشة إدخال الباسورد -->
+        <div id="lockScreen" class="card">
+            <h1>🔒 ممنوع الاقتراب!</h1>
+            <p>أدخل الباسورد السري عشان تدخل عالم العبث:</p>
+            <input type="text" id="passwordInput" placeholder="اكتب الباسورد هنا...">
+            <button class="btn" onclick="checkPassword()">دخول 🚀</button>
+            <div id="errorMsg" class="error-msg">باسورد غلط يا حُب، حاول تاني! 🤡</div>
+        </div>
+
+        <!-- الموقع الأساسي (بيظهر بعد صحة الباسورد) -->
+        <div id="mainContent" class="card">
+            <h1>⚠️ عيد ميلاد مين وإحنا سايقينها!</h1>
+            <p>
+                كل سنة وأنتِ مجنوني المفضلة والسبب الرئيسي في الضغط العالي اللي عندي. 
+                عايشين مع بعض في أحلى عبث في التاريخ، ومن غيرك الدنيا كانت هتبقى طشاش!
+            </p>
+            <button class="btn" onclick="showMessage()">اضغطي هنا عشان الصدمة 🤡</button>
+            <div id="secretMessage" class="hidden-message">
+                "بحبك يا طيز" ❤️🔥
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkPassword() {
+            const pass = document.getElementById("passwordInput").value.trim();
+            const errorDiv = document.getElementById("errorMsg");
+
+            if (pass === "8/11") {
+                document.getElementById("lockScreen").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+                startFloating(); // بدء العبث والقلوب بعد الدخول
+            } else {
+                errorDiv.style.display = "block";
+            }
+        }
+
+        function showMessage() {
+            var msg = document.getElementById("secretMessage");
+            msg.style.display = msg.style.display === "block" ? "none" : "block";
+        }
+
+        // إطلاق قلوب وبالونات مكثفة من تحت
+        function createFloatingElement() {
+            const item = document.createElement('div');
+            item.classList.add('floating-item');
+            
+            const symbols = ['🎈', '❤️', '💖', '🎈', '💘', 'بحبك يا طيز 🍑'];
+            const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+            
+            if (randomSymbol.includes('بحبك')) {
+                item.style.fontSize = '16px';
+                item.style.color = '#ff007f';
+                item.style.fontWeight = 'bold';
+                item.style.background = 'rgba(0,0,0,0.8)';
+                item.style.padding = '5px 10px';
+                item.style.borderRadius = '10px';
+                item.style.border = '1px solid #ff007f';
+            } else {
+                item.style.fontSize = (Math.random() * 25 + 15) + 'px';
+            }
+
+            item.innerHTML = randomSymbol;
+            item.style.left = Math.random() * 90 + 5 + 'vw';
+            item.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            
+            document.body.appendChild(item);
+
+            setTimeout(() => {
+                item.remove();
+            }, 6000);
+        }
+
+        function startFloating() {
+            setInterval(createFloatingElement, 300);
+        }
+    </script>
+
+</body>
+</html>
